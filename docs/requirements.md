@@ -45,7 +45,7 @@ Expected status codes below are from the API docs and must be confirmed against 
 | REQ-AUTH-01 | `POST /auth` with valid credentials returns a token. | Positive |
 | REQ-AUTH-02 | `POST /auth` with invalid credentials does not return a token. | Negative |
 | REQ-CREATE-01 | `POST /booking` with a valid payload returns 200, a `bookingid`, and a `booking` object whose fields match the request. | Positive |
-| REQ-CREATE-02 | `POST /booking` with a missing or malformed payload is rejected (no booking is created). | Negative |
+| REQ-CREATE-02 | `POST /booking` with a missing or malformed payload is rejected (no booking is created). **Observed: the live API returns 500; a 400 would be the standard status for invalid input.** | Negative |
 | REQ-GET-01 | `GET /booking/{id}` for an existing booking returns 200 and all fields with correct types and values. | Positive |
 | REQ-GET-02 | `GET /booking/{id}` for a non-existent id returns 404. | Negative |
 | REQ-GET-03 | `GET /booking` returns a list of booking ids, and can be filtered by name or dates. | Positive |
@@ -86,8 +86,21 @@ Expected status codes below are from the API docs and must be confirmed against 
 
 | REQ-ID | Test file | Test name | Status |
 |---|---|---|---|
-| REQ-LOGIN-01 | | | Not started |
-| REQ-AUTH-01 | | | Not started |
+| REQ-CREATE-01 | tests/api/create-booking.spec.js | creates a booking and returns matching fields | Pass |
+| REQ-CREATE-02 | tests/api/create-booking.spec.js | rejects a payload with a missing required field | Pass |
+| REQ-GET-01 | tests/api/get-booking.spec.js | returns all fields of an existing booking | Written, confirm after merge run |
+| REQ-GET-02 | tests/api/get-booking.spec.js | returns 404 for a booking id that does not exist | Written, confirm after merge run |
+| REQ-GET-03 | tests/api/get-booking.spec.js | lists booking ids and filters by name; empty list for no match | Written, confirm after merge run |
+| REQ-AUTH-01, REQ-AUTH-02 | | | Not started |
+| REQ-UPDATE-01 to 03 | | | Not started |
+| REQ-DELETE-01, REQ-DELETE-02 | | | Not started |
+| REQ-LOGIN, REQ-INV, REQ-CART, REQ-CHK (UI) | | | Not started |
+
+## 9a. Known deviations (live behavior vs. expected)
+
+| REQ-ID | Expected | Observed |
+|---|---|---|
+| REQ-CREATE-02 | 400 for invalid input | 500 for a missing `firstname` |
 
 ## 10. Assumptions and risks
 
