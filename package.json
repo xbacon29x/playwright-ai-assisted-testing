@@ -2,9 +2,11 @@
   "name": "playwright-test",
   "version": "1.0.0",
   "description": "",
-  "scripts": {"test": "playwright test",
-    "test:api": "playwright test tests/api",
-    "test:ui": "playwright test tests/ui"},
+  "scripts": {
+    "test": "playwright test",
+    "test:api": "playwright test --project=api",
+    "test:ui": "playwright test --project=ui"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
