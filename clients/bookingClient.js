@@ -19,6 +19,10 @@ export class BookingClient {
     return this.request.get(`/booking/${id}`);
   }
 
+   list(params = {}) {
+    return this.request.get('/booking', { params });
+  }
+
   remove(id, token) {
     return this.request.delete(`/booking/${id}`, {
       headers: { Cookie: `token=${token}` },
